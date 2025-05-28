@@ -20,7 +20,7 @@ EEG = pop_iclabel(EEG, 'default');
 
 
 
-
+pop_viewprops
 
 
 
