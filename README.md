@@ -53,7 +53,7 @@ The workflow begins with EEG signals that have already been preprocessed by the 
 
 > ![alt text](filter_bank_csp_.png)
 
-FB-CSP is an extension of the Common Spatial Pattern (CSP) technique, which is widely used in EEG signal classification. Instead of applying CSP on a single frequency band, FB-CSP decomposes EEG signals into multiple frequency bands using a filter bank, then applies CSP separately on each band. The resulting spatially filtered signals are then transformed into log-variance features and concatenated into a single feature vector for classification.
+FB-CSP is an extension of the Common Spatial Pattern (CSP) technique, which is widely used in EEG signal classification. Instead of applying CSP on a single frequency band, FB-CSP decomposes EEG signals into multiple frequency bands using a filter bank, then applies CSP separately on each band. For each band, we selected 4 spatial components (i.e., the most discriminative CSP filters) to extract relevant features. The resulting spatially filtered signals are then transformed into log-variance features and concatenated into a single feature vector for classification.
 
 ## _LSM CNN - Training Details_
 
@@ -151,12 +151,22 @@ Due to the high memory demand of the LSM CNN model, we were unable to complete t
 
 Generally, longer windows improve classification accuracy, especially for the SVM and LDA classifiers. However, 4-second windows strike a good balance between accuracy and computational efficiency, making them a practical choice for real-time BCI systems.
 
-### Overall Observations
+## Overall Observations
 
 Overall, under the Leave-One-Group-Out (LOGO) validation strategy, the FB-CSP method demonstrates more stable and superior classification performance compared to the LSM CNN model. In addition, FB-CSP is more computationally efficient and requires fewer resources. Using a 12–22 Hz filter bank with a 4-second decision window offers a good balance between accuracy and practicality, making FB-CSP a promising approach for real-world BCI system implementation.
 
-## _Usage and Demo Video_
+## _Usage_
 
+### FB-CSP  
+To run the FB-CSP experiments, please refer to the `FB_CSP_classify.ipynb` notebook. The following Python packages are required:  
+- `mne`  
+- `scikit-learn`  
+- `h5py`  
+
+### Learnable Spatial Mapping (LSM-CNN)  
+The code for the LSM-CNN model is based on the official implementation from the [Learnable Spatial Mapping GitHub Repository](https://github.com/NCA-Lab/learnable_spatial_mapping).  
+
+Our experiments can be reproduced using the `train_lsm.ipynb` notebook. Please ensure `PyTorch` is properly installed before running this notebook.
 
 
 ## Reference
