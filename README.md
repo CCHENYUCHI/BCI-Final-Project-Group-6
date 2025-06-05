@@ -80,7 +80,19 @@ The goal across all experiments is to identify the optimal configuration—in te
 
 ## ___Validation_ - Leave One Group Out__
 
+Due to the randomized angle assignment in the NJU dataset, each subject has a different number of trials for each direction. As a result, it's not feasible to ensure a fixed ratio of angles across all subjects during grouping. To address this, we divided subjects into five groups and applied a Leave-One-Group-Out (LOGO) validation strategy. We aimed to keep the groups consistent across experiments while also minimizing imbalances in the number of trials per angle.
 
+The following table shows the percentage distribution of trial segments per angular condition within each group:
+
+| Group (Subjects) | Group 1 (S02~S07) | Group 2 (S08~S15) | Group 3 (S16~S19) | Group 4 (S21~S23) | Group 5 (S25~S27) |
+|:-:|:-:|:-:|:-:|:-:|:-:|
+|All (6755)|21.3%|17.3%|21.0%|21.9%|18.4%|
+|±90° (1172)|13.9%|12.9%|14.1%|31.4%|27.7%|
+|±60° (1235)|13.9%|12.0%|15.6%|28.0%|30.4%|
+|±45° (1205)|15.4%|13.4%|14.5%|31.3%|25.4%|
+|±30° (1141)|17.2%|13.4%|14.5%|33.9%|20.9%|
+
+For the final accuracy calculation, we compute the classification accuracy at the segment level. However, to report variability, we compute the standard deviation across the five validation groups based on their individual accuracy scores.
 
 ## _Result_
 
@@ -92,11 +104,11 @@ The goal across all experiments is to identify the optimal configuration—in te
 
     | Direction (Segments numbers) | FB CSP + SVM | FB CSP + LDA | FB CSP + Decision Tree | Learnable Sptail Mapping CNN|
     |:-:|:-:|:-:|:-:|:-:|
-    | All (6653)|49.5±1.4|48.8±2.6|48.6±1.7|54.4±1.7|
-    | ±90 (1172)|**62.4±6.6**|**57.1±3.3**|**58.0±4.5**|**58.6±4.6**|
-    | ±60 (1235)|47.9±5.3|48.9±6.6|47.4±5.6|53.3±2.1|
-    | ±45 (1205)|40.7±5.6|44.2±7.1|48.6±11.0|52.8±3.1|
-    | ±30 (1141)|38.6±10.0|35.8±11.0|44.7±6.5|52.6±3.1|
+    | All (6755)|49.5±1.4|48.8±2.6|48.6±1.7|54.4±1.7|
+    | ±90° (1172)|**62.4±6.6**|**57.1±3.3**|**58.0±4.5**|**58.6±4.6**|
+    | ±60° (1235)|47.9±5.3|48.9±6.6|47.4±5.6|53.3±2.1|
+    | ±45° (1205)|40.7±5.6|44.2±7.1|48.6±11.0|52.8±3.1|
+    | ±30° (1141)|38.6±10.0|35.8±11.0|44.7±6.5|52.6±3.1|
     
 2. **±90 Classification with Different Band CSP**
 
@@ -105,9 +117,9 @@ The goal across all experiments is to identify the optimal configuration—in te
     |Filter Bank (1~40, 14 Bank)|58.0±8.4|56.2±8.5|56.2±11.1|
     |1−4 Hz (δ)|55.5±3.3|52.6±3.3|52.2±6.4|
     |4−8 Hz (θ)|56.1±3.0|55.0±2.3|54.4±4.6|
-    |8−12 Hz (α)|54.0±9.6|57.9±7.4|56.7±5.8|
-    |12~20 Hz|66.2±7.5|56.7±5.9|53.2±7.5|
-    |Filter Bank (12~22, 4 Bank)|62.4±6.6|57.1±3.3|58.0±4.5|
+    |8−12 Hz (α)|54.0±9.6|**57.9±7.4**|56.7±5.8|
+    |12~20 Hz|**66.2±7.5**|56.7±5.9|53.2±7.5|
+    |Filter Bank (12~22, 4 Bank)|62.4±6.6|57.1±3.3|**58.0±4.5**|
     |12−30 Hz (β)|56.7±1.6|57.7±9.1|57.3±8.3|
 
 3. **Decision Windows**
