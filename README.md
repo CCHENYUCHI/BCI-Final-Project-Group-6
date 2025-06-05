@@ -8,14 +8,34 @@
 
 # BCI Framework
 
+This project is our first time to analyze data in the field of EEG-based Auditory Attention Decoding (AAD). It also represents our initial exploration of the NJU Dataset. As a starting point, we implemented previously established methods to build a foundation for our analysis.
+
+We selected two approaches serve as the core components for feature extraction and classification in our BCI project.
+
+1. Filter Bank CSP
+   
+    The Common Spatial Pattern (CSP) technique has been widely used in AAD tasks [2–6] due to its ability to separate attention-related neural patterns. Filter Bank CSP further enhances this by applying CSP across multiple frequency bands. In the work of Geirnaert et al. [1], FB-CSP was combined with a Linear Discriminant Analysis (LDA) classifier to decode auditory attention direction. Their method achieved 90.5% accuracy in classifying between ±90° directions using both the KUL dataset and their in-house dataset.
+
+    FB-CSP does not rely on clean speech envelopes and provides high accuracy even on short time segments, making it promising for real-time applications in neuro-steered hearing devices.
+
+    > ![alt text](filter_bank_csp_.png)
+    > Figure 1. Overview of the FB-CSP methods
+
+2. Learnable Spatial Mapping CNN
+   
+   > ![alt text](lsm.png)
+    
+    The method proposed by Zhang et al. [7] is the first to introduce and analyze the NJU dataset, which is the same dataset we use in this project. As the dataset creators, their work provides an important baseline for future research on auditory attention decoding under more complex spatial conditions. For this reason, we selected their approach as our baseline method.
+
+    Their model incorporates a Learnable Spatial Mapping (LSM) mechanism that transforms EEG channels into a 2D structure to better capture spatial relationships between electrodes. This spatial transformation allows convolutional layers to more effectively extract inter-channel patterns relevant to the listener’s directional attention.
+
+While both studies made valuable contributions, they did not investigate subject dependency. To address this, our analysis employs a subject-independent evaluation strategy, using leave-one-group-out cross-validation to assess the model's robustness across different individuals.
+
 ## Workflow
 
-這次的Project是我們對EEG Audio Attention Decoding任次的首次嘗試分析，使用也是第一次分析NJU Dataset。因此首先嘗試使用過去已有的方法，來對我們感興趣的任務進行實作。我們挑選了兩種方法，Filter Bank CSP以及Learnable spatial mapping CNN model，作為BCI project的主要Feature Extraction和Classification methods。
+![alt text](workflow.png)
 
-CSP作為常用在EEG分析的方法
-
-![alt text](image.png)
-![alt text](image-1.png)
+因為本次使用的NJU dataset已經做過Pre-processing，並且在上面我們已經驗證過他的Artifact很少，是Quality很高的Dataset，因此後續不再進行更多的pre-processing，直接進行分析。
 
 ## _Feature Extraction_
 | CSP | Filter Bank (FB) CSP | Channel Selection + Frequency Domain | 
@@ -70,3 +90,13 @@ CSP作為常用在EEG分析的方法
 
 
 ## _Usage and Demo Video_
+
+
+## Reference
+
+1. Geirnaert, S., Francart, T., & Bertrand, A. (2020). Fast EEG-based decoding of the directional focus of auditory attention using common spatial patterns. IEEE Transactions on Biomedical Engineering, 68(5), 1557-1568.
+2. Yang, K., Xie, Z., Di Zhou, L. W., & Zhang, G. (2023). Auditory attention detection in real-life scenarios using common spatial patterns from eeg. In INTERSPEECH.
+3. Cai, S., Su, E., Song, Y., Xie, L., & Li, H. (2020, October). Low Latency Auditory Attention Detection with Common Spatial Pattern Analysis of EEG Signals. In INTERSPEECH (pp. 2772-2776).
+4. Rotaru, I., Geirnaert, S., Heintz, N., Van de Ryck, I., Bertrand, A., & Francart, T. (2024). What are we really decoding? Unveiling biases in EEG-based decoding of the spatial focus of auditory attention. Journal of Neural Engineering, 21(1), 016017.
+5. Rotaru, I., Geirnaert, S., Heintz, N., Van de Ryck, I., Bertrand, A., & Francart, T. (2023). EEG-based decoding of the spatial focus of auditory attention in a multi-talker audiovisual experiment using Common Spatial Patterns. bioRxiv, 2023-07.
+6. Zhang, Y., Ruan, H., Yuan, Z., Du, H., Gao, X., & Lu, J. (2023, June). A learnable spatial mapping for decoding the directional focus of auditory attention using EEG. In ICASSP 2023-2023 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP) (pp. 1-5). IEEE.
