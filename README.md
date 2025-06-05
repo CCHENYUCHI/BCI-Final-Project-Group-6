@@ -16,11 +16,6 @@ We selected two approaches serve as the core components for feature extraction a
    
     The Common Spatial Pattern (CSP) technique has been widely used in AAD tasks [2–6] due to its ability to separate attention-related neural patterns. Filter Bank CSP further enhances this by applying CSP across multiple frequency bands. In the work of Geirnaert et al. [1], FB-CSP was combined with a Linear Discriminant Analysis (LDA) classifier to decode auditory attention direction. Their method achieved 90.5% accuracy in classifying between ±90° directions using both the KUL dataset and their in-house dataset.
 
-    FB-CSP does not rely on clean speech envelopes and provides high accuracy even on short time segments, making it promising for real-time applications in neuro-steered hearing devices.
-
-    > ![alt text](filter_bank_csp_.png)
-    > Figure 1. Overview of the FB-CSP methods
-
 2. Learnable Spatial Mapping CNN
    
    > ![alt text](lsm.png)
@@ -35,35 +30,61 @@ While both studies made valuable contributions, they did not investigate subject
 
 ![alt text](workflow.png)
 
-因為本次使用的NJU dataset已經做過Pre-processing，並且在上面我們已經驗證過他的Artifact很少，是Quality很高的Dataset，因此後續不再進行更多的pre-processing，直接進行分析。
+Since the NJU dataset we use in this study has already undergone preprocessing—and our prior inspection confirmed that it contains minimal artifacts and is of high quality—we do not perform any additional preprocessing. Instead, we proceed directly with the analysis.
 
-## _Feature Extraction_
-| CSP | Filter Bank (FB) CSP | Channel Selection + Frequency Domain | 
-|------|------|------|
+Unlike the original FB-CSP study [1], which used only LDA as a classifier, we extend the comparison by including SVM and Decision Tree classifiers. As a result, we evaluate four models in total:
+   - FB-CSP + LDA
+   - FB-CSP + SVM
+   - FB-CSP + Decision Tree
+   - LSM CNN (from [7])
 
-## _Classification Model_
-| __FB CSP + SVM__ | FB CSP + LDA | FB CSP + Decision Tree | Learnable Sptail Mapping CNN|
-|------|------|------|------|
+For validation, we adopt a leave-one-group-out strategy. We first estimate the number of trials per subject and divide the entire dataset into five groups, maintaining an approximately equal distribution. Each subject appears in only one group, ensuring that the training and validation sets are composed of trials from non-overlapping subject groups. This setup allows us to assess model performance in a subject-independent manner.
 
-## _Validation_
+## _Feature Extraction - Filter Bank Common Spatial Pattern_
 
-- __Leave One Group Out__
+> ![alt text](filter_bank_csp_.png)
+
+FB-CSP is an extension of the Common Spatial Pattern (CSP) technique, which is widely used in EEG signal classification. Instead of applying CSP on a single frequency band, FB-CSP decomposes EEG signals into multiple frequency bands using a filter bank, then applies CSP separately on each band. The resulting spatially filtered signals are then transformed into log-variance features and concatenated into a single feature vector for classification.
+
+## ___Experimental Design___
+
+Our experiments are structured around three key classification tasks, each targeting a different aspect of auditory attention decoding performance. These tasks aim to evaluate model robustness and identify the most suitable configuration for potential use in a real-world BCI system.
+
+1. Auditory Attention Direction Classification
+   
+   We assess the model's ability to classify the direction of auditory attention using only left vs. right trials with symmetric angular offsets. We evaluate five combinations of speaker angles:
+
+   - All symmetric angles
+   - ±90°
+   - ±60°
+   - ±45°
+   - ±30°
+
+2. Frequency Band Comparison for CSP-based Feature Extraction
+
+    To identify the most effective frequency range, we compare classification performance across:
+
+   - Single-band CSP (delta, theta, alpha, beta)
+
+   - Two FB-CSP configurations:
+
+     1. 2–40 Hz (14 bands, 4 Hz width, 2 Hz overlap)
+
+      2. 12–22 Hz (4 bands, 4 Hz width, 2 Hz overlap)
+
+3. Effect of Decision Window Length
+    
+    We examine how different decision window lengths affect classification accuracy, aiming to find a balance between fast detection and model performance—critical for real-time BCI applications.
+
+The goal across all experiments is to identify the optimal configuration—in terms of frequency band, temporal resolution, and classification setting—for building a robust and responsive BCI system based on EEG auditory attention decoding.
+
+## ___Validation_ - Leave One Group Out__
+
+
 
 ## _Result_
 
-1. **±90 Classification with Different Band CSP**
-
-    | Filter Bands (1172) | FB CSP + SVM | FB CSP + LDA | FB CSP + Decision Tree |
-    |:-:|:-:|:-:|:-:|
-    |Filter Bank (1~40, 14 Bank)|58.0±8.4|56.2±8.5|56.2±11.1|
-    |1−4 Hz (δ)|55.5±3.3|52.6±3.3|52.2±6.4|
-    |4−8 Hz (θ)|56.1±3.0|55.0±2.3|54.4±4.6|
-    |8−12 Hz (α)|54.0±9.6|57.9±7.4|56.7±5.8|
-    |12~20 Hz|66.2±7.5|56.7±5.9|53.2±7.5|
-    |Filter Bank (12~22, 4 Bank)|62.4±6.6|57.1±3.3|58.0±4.5|
-    |12−30 Hz (β)|56.7±1.6|57.7±9.1|57.3±8.3|
-
-2. **Different Direction**
+1. **Different Direction**
 
     The attention angel in NJU dataset have 15 direction we choice the all 對應的角度來預測 (ex. -90/90, -30/30, ...). And is a binary classification the label with left and right.
 
@@ -76,6 +97,18 @@ While both studies made valuable contributions, they did not investigate subject
     | ±60 (1235)|47.9±5.3|48.9±6.6|47.4±5.6|53.3±2.1|
     | ±45 (1205)|40.7±5.6|44.2±7.1|48.6±11.0|52.8±3.1|
     | ±30 (1141)|38.6±10.0|35.8±11.0|44.7±6.5|52.6±3.1|
+    
+2. **±90 Classification with Different Band CSP**
+
+    | Filter Bands (1172) | FB CSP + SVM | FB CSP + LDA | FB CSP + Decision Tree |
+    |:-:|:-:|:-:|:-:|
+    |Filter Bank (1~40, 14 Bank)|58.0±8.4|56.2±8.5|56.2±11.1|
+    |1−4 Hz (δ)|55.5±3.3|52.6±3.3|52.2±6.4|
+    |4−8 Hz (θ)|56.1±3.0|55.0±2.3|54.4±4.6|
+    |8−12 Hz (α)|54.0±9.6|57.9±7.4|56.7±5.8|
+    |12~20 Hz|66.2±7.5|56.7±5.9|53.2±7.5|
+    |Filter Bank (12~22, 4 Bank)|62.4±6.6|57.1±3.3|58.0±4.5|
+    |12−30 Hz (β)|56.7±1.6|57.7±9.1|57.3±8.3|
 
 3. **Decision Windows**
 
