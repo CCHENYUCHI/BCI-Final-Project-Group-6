@@ -27,13 +27,13 @@ The file name of this dataset was labeled as "preprocessed" and "arte_removed", 
 Therefore, to verify the above concerns regarding the dataset, we treat it as an set of unprocessed raw data, and walk through the complete preprocessing pipeline as follows:
 * Import raw data
     * IClabel of raw data
-    > ![ICAlable_Raw](FinalProject/ICAlable_raw.png)
+    > ![ICAlable_Raw](ICAlable_raw.png)
     > Figure 1. IClable of raw data
 * Band pass filter
     * Basic FIR filter
     * Band: 1~32Hz
     * IClabel of filtered data
-    > ![ICAlable_Filtered](FinalProject/ICAlable_filtered.png)
+    > ![ICAlable_Filtered](ICAlable_filtered.png)
     > Figure 2. IClable of filtered data
 * Down sampling
     * Raw data was originally collected at a sampling rate of 1024 Hz 
@@ -44,17 +44,17 @@ Therefore, to verify the above concerns regarding the dataset, we treat it as an
 * Artifact Subspace Reconstruction (ASR)
     * Max acceptable 0.5 second window std dev = 20
     * IClabel of ASR corrected data
-    > ![Figure 3. ICAlable_ASR](FinalProject/ICAlable_ASR.png)
+    > ![Figure 3. ICAlable_ASR](ICAlable_ASR.png)
     
     * The ASR corrected result showed that the majority of artifacts had been rejected from the the data  
-    > ![Figure 4.  ASR_Result](FinalProject/ASR_and_reject.png)
+    > ![Figure 4.  ASR_Result](ASR_and_reject.png)
 
 
 * Analyzing the hidden independent components within EEG through ICA and IClabel
 
 Although we had no access to the original unprocessed raw data, thus unable to evaluate the exact amount of artifact being removed due to the absense of the actual benchmark. But we could be confident to say that it's a set of well preprocessed data through comparisoning the variations in IClable between raw EEG, filtered EEG and ASR corrected EEG. In general, the ICA Table following this paragraph had shown scarce amount of identifiable artifact based on the preprocess pipeline mentioned above, which had successfully removed the commonly seen artifacts 
 
-   > ![Table 1. ICA Table](FinalProject/ICA%20table.png)
+   > ![Table 1. ICA Table](ICA%20table.png)
 
 # BCI Framework
 
