@@ -125,7 +125,6 @@ Our experiments can be reproduced using the `train_lsm.ipynb` notebook. Please e
 
 ## _Demo Video_
 For a quick demonstration of our workflow, dataset processing, and model training steps, please refer to the demo video linked below.  
-It walks through the major components of the pipeline and provides an overview of how to reproduce the experiments.
 
  [🔗 Demo Video](https://drive.google.com/file/d/1EmUWOP9_lxkcY6vVsJ9Sfho_BpuO9uCv/view?usp=sharing)
 
