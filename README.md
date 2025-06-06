@@ -48,7 +48,6 @@ The workflow begins with EEG signals that have already been preprocessed by the 
 > 
 >Finally, classification is performed, and accuracy is evaluated using a subject-independent Leave-One-Group-Out (LOGO) cross-validation strategy.
 
-
 ## _Feature Extraction - Filter Bank Common Spatial Pattern_
 
 > ![alt text](filter_bank_csp_.png)
@@ -119,7 +118,7 @@ To run the FB-CSP experiments, please refer to the `FB_CSP_classify.ipynb` noteb
 - `h5py`  
 
 ### Learnable Spatial Mapping (LSM-CNN)  
-The code for the LSM-CNN model is based on the official implementation from the [Learnable Spatial Mapping GitHub Repository](https://github.com/NCA-Lab/learnable_spatial_mapping).  
+The code for the LSM-CNN model is based on the [7] from the [Learnable Spatial Mapping GitHub Repository](https://github.com/NCA-Lab/learnable_spatial_mapping).  
 
 Our experiments can be reproduced using the `train_lsm.ipynb` notebook. Please ensure `PyTorch` is properly installed before running this notebook.
 
@@ -135,7 +134,7 @@ For a quick demonstration of our workflow, dataset processing, and model trainin
 | Direction (Segment Count) | FB CSP + SVM | FB CSP + LDA | FB CSP + Decision Tree | Learnable Sptail Mapping CNN|
 |:-:|:-:|:-:|:-:|:-:|
 | All (6755)|49.5±1.4|48.8±2.6|48.6±1.7|54.4±1.7|
-| ±90° (1172)|**62.4±6.6**|**57.1±3.3**|**58.0±4.5**|**58.6±4.6**|
+| ±90° (1172)|**62.4±6.6**|**57.1±3.3**|**58.0±4.5**|**60.6±+6.7**|
 | ±60° (1235)|47.9±5.3|48.9±6.6|47.4±5.6|53.3±2.1|
 | ±45° (1205)|40.7±5.6|44.2±7.1|48.6±11.0|52.8±3.1|
 | ±30° (1141)|38.6±10.0|35.8±11.0|44.7±6.5|52.6±3.1|
