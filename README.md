@@ -1,10 +1,60 @@
 # Data Description
 
+It's an auditory attention decoding dataset in which participants were instructed to attend to one of the two competing speakers at two different locations on the horizontal plane.
+
 ## _Experimental Design_
+* Participants: 21 subjects with normal hearing.
 
+* Audio Stimuli:
+    Chinese news segments spoken by various male and female professional news anchors.
+
+* Trial Structure:
+    * Each lasts 2 minutes.
+    * Each includes two competing speakers with distinct audio.
+    * Each subject hears each trial twice: 
+        * Once attending to the left speaker
+        * Once to the right.
+
+* Each subject completes 16 trials, resulting in 32 total attention-labeled trials per subject.
 ## _Data Collection_
+* EEG Cap:
+Emotiv Epoc Flex Saline system (32-channel)
+*  Sampling rate of 128 Hz (downsampled from 1024 Hz)
+* Conducted in a low-reverberant listening room
+## _Quality Evaulation_
+The file name of this dataset was labeled as "preprocessed" and "arte_removed", which suggested that it might had been preprocessed to some extent. However, based on the documentation of the dataset, neither did we knew the exact preprocessing that has been done on the datase nor did we knew its impact on the data quality. 
 
-## _Qulity Evaulation_
+Therefore, to verify the above concerns regarding the dataset, we treat it as an set of unprocessed raw data, and walk through the complete preprocessing pipeline as follows:
+* Import raw data
+    * IClabel of raw data
+    > ![ICAlable_Raw](FinalProject/ICAlable_raw.png)
+    > Figure 1. IClable of raw data
+* Band pass filter
+    * Basic FIR filter
+    * Band: 1~32Hz
+    * IClabel of filtered data
+    > ![ICAlable_Filtered](FinalProject/ICAlable_filtered.png)
+    > Figure 2. IClable of filtered data
+* Down sampling
+    * Raw data was originally collected at a sampling rate of 1024 Hz 
+    * The dataset was already downsampled from 1024 Hz to 128Hz 
+    * Verified through the number of frames contained and the duration of each trail
+* Re-reference 
+    *  Average of 32ch
+* Artifact Subspace Reconstruction (ASR)
+    * Max acceptable 0.5 second window std dev = 20
+    * IClabel of ASR corrected data
+    > ![Figure 3. ICAlable_ASR](FinalProject/ICAlable_ASR.png)
+    
+    * The ASR corrected result showed that the majority of artifacts had been rejected from the the data  
+    > ![Figure 4.  ASR_Result](FinalProject/ASR_and_reject.png)
+
+
+* Analyzing the hidden independent components within EEG through ICA and IClabel
+
+Although we had no access to the original unprocessed raw data, thus unable to evaluate the exact amount of artifact being removed due to the absense of the actual benchmark. But we could be confident to say that it's a set of well preprocessed data through comparisoning the variations in IClable between raw EEG, filtered EEG and ASR corrected EEG. In general, the ICA Table following this paragraph had shown scarce amount of identifiable artifact based on the preprocess pipeline mentioned above, which had successfully removed the commonly seen artifacts 
+
+   > ![Table 1. ICA Table](FinalProject/ICA%20table.png)
 
 # BCI Framework
 
