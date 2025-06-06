@@ -110,6 +110,25 @@ The following table shows the percentage distribution of trial segments per angu
 
 For the final accuracy calculation, we compute the classification accuracy at the segment level. However, to report variability, we compute the standard deviation across the five validation groups based on their individual accuracy scores.
 
+## _Usage_
+
+### FB-CSP  
+To run the FB-CSP experiments, please refer to the `FB_CSP_classify.ipynb` notebook. The following Python packages are required:  
+- `mne`  
+- `scikit-learn`  
+- `h5py`  
+
+### Learnable Spatial Mapping (LSM-CNN)  
+The code for the LSM-CNN model is based on the official implementation from the [Learnable Spatial Mapping GitHub Repository](https://github.com/NCA-Lab/learnable_spatial_mapping).  
+
+Our experiments can be reproduced using the `train_lsm.ipynb` notebook. Please ensure `PyTorch` is properly installed before running this notebook.
+
+## _Demo Video_
+For a quick demonstration of our workflow, dataset processing, and model training steps, please refer to the demo video linked below.  
+It walks through the major components of the pipeline and provides an overview of how to reproduce the experiments.
+
+ [🔗 Demo Video](https://drive.google.com/file/d/1EmUWOP9_lxkcY6vVsJ9Sfho_BpuO9uCv/view?usp=sharing)
+
 ## _Result_
 
 ### 1. **Different Direction**
@@ -143,7 +162,7 @@ Using a single CSP band in the 12–20 Hz range with SVM yields the highest ac
 | Window Size (Segment Count) | FB CSP + SVM | FB CSP + LDA | FB CSP + Decision Tree | Learnable Sptail Mapping CNN|
 |:-:|:-:|:-:|:-:|:-:|
 |10 (476)|**63.4±8.0**|58.4±6.9|51.7±6.9| x |
-|4 (1172)|**62.4±6.6**|57.1±3.3|58.0±4.5|58.6±4.6|
+|4 (1172)|**62.4±6.6**|57.1±3.3|58.0±4.5|60.6±+6.7|
 |2 (2380)|**59.3±6.7**|56.6±3.5|55.8±6.7|59.2±5.5|
 |1 (4760)|**57.7±6.8**|56.6±3.2|56.8±5.5|55.6±5.2|
 
@@ -154,20 +173,6 @@ Generally, longer windows improve classification accuracy, especially for the SV
 ## Overall Observations
 
 Overall, under the Leave-One-Group-Out (LOGO) validation strategy, the FB-CSP method demonstrates more stable and superior classification performance compared to the LSM CNN model. In addition, FB-CSP is more computationally efficient and requires fewer resources. Using a 12–22 Hz filter bank with a 4-second decision window offers a good balance between accuracy and practicality, making FB-CSP a promising approach for real-world BCI system implementation.
-
-## _Usage_
-
-### FB-CSP  
-To run the FB-CSP experiments, please refer to the `FB_CSP_classify.ipynb` notebook. The following Python packages are required:  
-- `mne`  
-- `scikit-learn`  
-- `h5py`  
-
-### Learnable Spatial Mapping (LSM-CNN)  
-The code for the LSM-CNN model is based on the official implementation from the [Learnable Spatial Mapping GitHub Repository](https://github.com/NCA-Lab/learnable_spatial_mapping).  
-
-Our experiments can be reproduced using the `train_lsm.ipynb` notebook. Please ensure `PyTorch` is properly installed before running this notebook.
-
 
 ## Reference
 
